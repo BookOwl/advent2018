@@ -1,5 +1,5 @@
 # 🎄 advent2018 🎄
-This repo contains the code I used to solve Advent of Code 2017.
+This repo contains the code I used to solve Advent of Code 2018.
 
 ## License
 Everything in this repo is released under the MIT License
