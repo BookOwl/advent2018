@@ -8,7 +8,7 @@ fn main() -> std::io::Result<()> {
     f.read_to_string(&mut input)?;
     
     // Sum the lines of input to get the final answer
-    let freq = input.split("\n").map(|n| n.parse::<i32>().unwrap()).fold(0, |freq, change| freq + change);
+    let freq: i32 = input.split("\n").map(|n| n.parse::<i32>().unwrap()).sum();
     println!("{}", freq);
 
     Ok(())
