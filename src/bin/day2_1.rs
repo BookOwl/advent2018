@@ -24,6 +24,8 @@ fn get_counts(word: &str) -> (usize, usize) {
     let mut has_two = 0;
     let mut has_three = 0;
     for c in word.chars() {
+        // This is as far as I know the best way to count how many of a char
+        // are in a str.
         let count = word.matches(c).count();
         match count {
             2 => has_two = 1,
