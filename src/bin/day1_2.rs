@@ -4,7 +4,7 @@ use std::collections::HashSet;
 
 fn main() -> std::io::Result<()> {
     // Get input from file
-    let mut f = File::open("inputs/day1_1.txt")?;
+    let mut f = File::open("inputs/day1.txt")?;
     let mut input = String::new();
     f.read_to_string(&mut input)?;
     
