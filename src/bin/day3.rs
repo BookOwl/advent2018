@@ -2,7 +2,6 @@ extern crate regex;
 use std::collections::HashSet;
 static CLAIMS: &str = include_str!("../../inputs/day3.txt");
 
-
 #[derive(Debug)]
 struct Claim {
     id: usize,
@@ -46,7 +45,31 @@ impl Claim {
     }
 }
 
-fn main() {
+fn count_overlaps(fabric: &[[usize; 1000]; 1000]) -> usize {
+    let mut count = 0;
+    for row in fabric.iter() {
+        for item in row.iter() {
+            if *item > 1 {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
+fn part1() {
+    let re = regex::Regex::new(r#"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)"#).unwrap();
+    let mut fabric = [[0; 1000]; 1000];
+    let claims: Vec<_> = CLAIMS.split("\n").map(|c| Claim::from_str(c, &re)).collect();
+    for claim in claims {
+        claim.mark_on_fabric(&mut fabric);
+    }
+    let count = count_overlaps(&fabric);
+    println!("Part 1: {}", count)
+    
+}
+
+fn part2() {
     let re = regex::Regex::new(r#"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)"#).unwrap();
     let mut fabric = [[0; 1000]; 1000];
     let mut overlaps = HashSet::new();
@@ -57,6 +80,11 @@ fn main() {
         overlaps = overlaps.union(&claim_overlapped).cloned().collect();
     }
     let did_not_overlap: Vec<_> = all_ids.difference(&overlaps).collect();
-    println!("{:?}", did_not_overlap);
+    println!("Part 2: {:?}", did_not_overlap[0]);
     
+}
+
+fn main() {
+    part1();
+    part2();
 }

@@ -1,9 +1,42 @@
 use std::io::{BufRead, BufReader, Result};
-use std::collections::HashSet;
 use std::fs::File;
 
 
-fn main() -> std::io::Result<()> {
+fn part1() -> std::io::Result<()> {
+    // Get input from file
+    let f = File::open("inputs/day2.txt")?;
+    let mut two_count = 0;
+    let mut three_count = 0;
+    
+    for word in BufReader::new(f).lines() {
+        let (has_two, has_three) = get_counts(&word?);
+        two_count += has_two;
+        three_count += has_three;
+    }
+
+    let checksum = two_count * three_count;
+    println!("Part 1: {}", checksum);
+
+    Ok(())
+}
+
+fn get_counts(word: &str) -> (usize, usize) {
+    let mut has_two = 0;
+    let mut has_three = 0;
+    for c in word.chars() {
+        // This is as far as I know the best way to count how many of a char
+        // are in a str.
+        let count = word.matches(c).count();
+        match count {
+            2 => has_two = 1,
+            3 => has_three = 1,
+            _ => {},
+        }
+    };
+    (has_two, has_three)
+}
+
+fn part2() -> std::io::Result<()> {
     // Get input from file
     let f = File::open("inputs/day2.txt")?;
     // Read the file linewise into a Vec. 
@@ -23,7 +56,7 @@ fn main() -> std::io::Result<()> {
             // assigns it to same, and then executes the block.
             // Otherwise it skips this block.
             if let Some(same) = are_close_enough(&word1, &word2) {
-                println!("{}", same);
+                println!("Part 2: {}", same);
                 break 'outer;
             }
         }
@@ -51,4 +84,11 @@ fn are_close_enough(x: &str, y: &str) -> Option<String> {
     } else {
         None
     }
+}
+
+
+fn main() -> std::io::Result<()> {
+    part1()?;
+    part2()?;
+    Ok(())
 }

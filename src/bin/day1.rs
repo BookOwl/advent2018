@@ -2,7 +2,20 @@ use std::io::Read;
 use std::fs::File;
 use std::collections::HashSet;
 
-fn main() -> std::io::Result<()> {
+fn part1() -> std::io::Result<()> {
+    // Get input from file
+    let mut f = File::open("inputs/day1.txt")?;
+    let mut input = String::new();
+    f.read_to_string(&mut input)?;
+    
+    // Sum the lines of input to get the final answer
+    let freq: i32 = input.split("\n").map(|n| n.parse::<i32>().unwrap()).sum();
+    println!("Part 1: {}", freq);
+
+    Ok(())
+}
+
+fn part2() -> std::io::Result<()> {
     // Get input from file
     let mut f = File::open("inputs/day1.txt")?;
     let mut input = String::new();
@@ -25,7 +38,13 @@ fn main() -> std::io::Result<()> {
             freqs.insert(freq);
         }
     }
-    println!("{}", freq);
+    println!("Part 2: {}", freq);
 
+    Ok(())
+}
+
+fn main() -> std::io::Result<()> {
+    part1()?;
+    part2()?;
     Ok(())
 }
